@@ -67,6 +67,7 @@ function reset(){
         option.classList.remove("selected");
         option.classList.remove("optionAI");
         option.classList.remove("disable");
+        aiTitle.classList.add('aiChoice');
     }
-    joc.innerHTML = '';
+    joc.innerHTML = '<h3>Calculatorul a ales:</h3>';
 }
