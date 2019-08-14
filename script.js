@@ -7,13 +7,25 @@ const resetBtn = document.querySelector('button');
 let playerWins = 0;
 let aiWins = 0;
 
-for (let i = 0; i < selected.length; i++){
-    let option = selected[i];
-    option.addEventListener("click", function(){
-        this.classList.add("selected");
-        disable();
-        play(this);
-    });
+const choseWeapon = function(){
+    this.classList.add("selected");
+    disable();
+    play(this);
+}
+function addEvent(){
+    for (let i = 0; i < selected.length; i++){
+        let option = selected[i];
+        option.addEventListener("click", choseWeapon);
+    }
+}
+addEvent();
+function disable() {
+    for (let i = 0; i < selected.length; i++){
+        let option = selected[i];
+        if(!option.classList.contains("selected")){
+            option.classList.add("disable");
+        }
+    }
 }
 function play(option){
     let playerPick = option.getAttribute('value');
@@ -39,23 +51,20 @@ function play(option){
     }
     showAiPick(playerPick, aiPick);
 }
+function posteazaRezultat(rez){
+    let rezultat = document.getElementById('rezultat');
+    rezultat.innerHTML = rez;
+}
 function showAiPick(player, ai){
+    joc.innerHTML = '<h3>Calculatorul a ales:</h3>';
+    for (let i = 0; i < selected.length; i++){
+        let option = selected[i];
+        option.removeEventListener("click", choseWeapon);
+    }
     let alegere = document.createElement('div');
     alegere.classList.add("optionAI", ai);
     joc.appendChild(alegere);
     aiTitle.classList.remove('aiChoice');
-}
-function disable() {
-    for (let i = 0; i < selected.length; i++){
-        let option = selected[i];
-        if(!option.classList.contains("selected")){
-            option.classList.add("disable");
-        }
-    }
-}
-function posteazaRezultat(rez){
-    let rezultat = document.getElementById('rezultat');
-    rezultat.innerHTML = rez;
 }
 
 resetBtn.addEventListener("click", reset);
@@ -70,4 +79,5 @@ function reset(){
         aiTitle.classList.add('aiChoice');
     }
     joc.innerHTML = '<h3>Calculatorul a ales:</h3>';
+    addEvent();
 }
